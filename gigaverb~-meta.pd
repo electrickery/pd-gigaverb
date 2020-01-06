@@ -1,0 +1,14 @@
+#N canvas 71 64 451 345 10;
+#X text 17 112 OUTLET_0 signal;
+#X text 16 34 LICENSE GPL 3;
+#X text 16 191 VERSION alpha;
+#X text 16 209 AUTHOR Marco Matteo Markidis;
+#X text 16 307 HELP_PATCH_AUTHORS Marco Matteo Markidis;
+#X text 16 245 EMAIL mm.markidis@gmail.com;
+#X text 16 173 LIBRARY gigaverb~;
+#X text 16 16 KEYWORDS reverb;
+#X text 16 52 DESCRIPTION reverb;
+#X text 16 83 INLET_0 signal and methods;
+#X text 17 127 OUTLET_1 signal;
+#X text 16 227 RELEASE_DATE 2015;
+#X text 16 263 WEBSITE;

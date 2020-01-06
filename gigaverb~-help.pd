@@ -1,0 +1,160 @@
+#N canvas 196 95 999 624 12;
+#X obj 41 987 gigaverb~ 300 15;
+#X obj 40 337 hip~ 5;
+#X obj 41 1017 output~;
+#X obj 40 247 phasor~ 1;
+#N canvas 753 114 475 300 sample 1;
+#X obj 110 166 outlet~ phasor_vel;
+#X obj 110 65 loadbang;
+#X floatatom 300 120 5 0 0 0 - - -, f 5;
+#X obj 300 167 outlet~ sample-long;
+#X obj 300 95 r length;
+#X obj 300 142 line~ $f1 10;
+#X obj 110 89 samplerate~;
+#X obj 110 114 /;
+#X obj 110 139 sig~;
+#X obj 219 122 t b f;
+#X connect 1 0 6 0;
+#X connect 2 0 5 0;
+#X connect 2 0 9 0;
+#X connect 4 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 8 0 0 0;
+#X connect 9 0 7 0;
+#X connect 9 1 7 1;
+#X restore 40 217 pd sample;
+#X obj 40 277 *~;
+#X obj 40 307 tabread4~ gigaarray;
+#N canvas 359 95 631 265 array 0;
+#X obj 33 96 soundfiler;
+#X floatatom 33 121 7 0 0 0 - - -, f 7;
+#X obj 33 42 loadbang;
+#X msg 33 68 read -resize ./voice.wav gigaarray;
+#N canvas 0 50 450 278 (subpatch) 0;
+#X array gigaarray 62079 float 2;
+#X coords 0 1 62079 -1 200 140 1;
+#X restore 362 20 graph;
+#X obj 33 142 s length;
+#X connect 0 0 1 0;
+#X connect 1 0 5 0;
+#X connect 2 0 3 0;
+#X connect 3 0 0 0;
+#X restore 530 29 pd array;
+#X floatatom 230 217 5 1 300 0 - roomsize -, f 5;
+#X obj 230 867 tgl 15 0 empty bypass empty 17 7 0 10 -262144 -1 -1
+0 1;
+#X msg 230 832 print;
+#X msg 230 244 roomsize \$1;
+#X msg 230 886 bypass \$1;
+#X msg 230 732 dry \$1;
+#X floatatom 230 705 5 -90 0 0 - dry -, f 5;
+#X floatatom 230 545 5 -90 0 0 - early -, f 5;
+#X msg 230 572 early \$1;
+#X msg 230 927 clear;
+#X floatatom 230 630 5 -90 0 0 - tail -, f 5;
+#X floatatom 230 462 5 0 1 0 - bandwidth -, f 5;
+#X msg 230 489 bandwidth \$1;
+#X msg 230 657 tail \$1;
+#X floatatom 230 381 5 0.1 360 0 - revtime -, f 5;
+#X msg 230 408 revtime \$1;
+#X floatatom 230 300 5 0 1 0 - damping -, f 5;
+#X msg 230 327 damping \$1;
+#X floatatom 230 767 5 -90 0 0 - wet -, f 5;
+#X msg 230 794 wet \$1;
+#N canvas 447 50 556 627 preset 0;
+#X obj 63 29 inlet preset;
+#X floatatom 63 53 5 0 0 0 - - -, f 5;
+#X obj 63 81 sel 0 1 2 3 4;
+#X msg 63 118 \; roomsize 5 \; damping 0.62 \; revtime 0.6 \; bandwidth
+0.48 \; early -11 \; tail -13 \; dry -6 \; wet 0;
+#X msg 213 118 \; roomsize 16 \; damping 0.18 \; revtime 1.24 \; bandwidth
+0.95 \; early -15 \; tail -17 \; dry -3 \; wet 0;
+#X msg 63 298 \; roomsize 80 \; damping 0.41 \; revtime 4.85 \; bandwidth
+0.69 \; early -9 \; tail -11 \; dry -3 \; wet 0;
+#X msg 213 298 \; roomsize 143 \; damping 0.71 \; revtime 7 \; bandwidth
+0.34 \; early -11 \; tail -9 \; dry -3 \; wet 0;
+#X msg 63 458 \; roomsize 300 \; damping 0.43 \; revtime 103 \; bandwidth
+0.51 \; early -26 \; tail -20 \; dry -5 \; wet 0;
+#X obj 383 33 loadbang;
+#X msg 383 58 0;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 2 1 4 0;
+#X connect 2 2 5 0;
+#X connect 2 3 6 0;
+#X connect 2 4 7 0;
+#X connect 8 0 9 0;
+#X connect 9 0 1 0;
+#X restore 531 84 pd preset;
+#X obj 531 60 hradio 15 1 0 5 empty empty empty 0 -8 0 10 -262144 -1
+-1 3;
+#X text 338 209 * The size of the room in meters. Excessivly large
+\, and excessively small values will make it sound a bit unrealistic.
+Values of around 30 sound good. Values: 1-300 meters (or what ever
+specified as maximum).;
+#X text 337 294 * Damping: This controls the high frequency damping
+(a lowpass filter) \, values near 1 will make it sound very bright
+\, values near 0 \, will make it sound very dark. Values: 0 - 1;
+#X text 338 377 * Reverb time (s): Reverb decay time in seconds. 7
+is a good place to start. Values 0.1 - 360 seconds!;
+#X text 337 452 * Input bandwidth: This is like a damping control for
+the input \, it has similar effect to the damping control \, but is
+subtly different. Values: 0 - 1;
+#X text 339 543 * Early reflection level (dB): The quantity of early
+reflections directly from the source). Think of Lexicons ambiance patches.
+Values: -90 - 0 dB;
+#X text 342 632 *Tail level (dB): The level of the classic reverb tail
+reflections. Values: -90 - 0 dB;
+#X text 344 762 * Wet level (dB): The level of reverberated signal.
+Values: -90 - 0 dB;
+#X text 345 825 * Print the values of all parameters to the Pd Window.
+;
+#X text 346 862 * Bypass signal uneffected when set to 1 Can be used
+to compare reverb signal with original signal and to save CPU power
+when gigaverb~ is not used.;
+#X text 348 927 * Clear the delay lines after a DSP overblow or to
+get rid of any remaining delay tailes.;
+#X text 200 985 * First optional creation arguments sets maximum roomsize
+in meters. This value largely affects memory usage and should be set
+as small as possible for better performance! Default is 300 Second
+argument is stereo spreading (0-100) which defaults to 15;
+#X text 342 699 * Dry level (dB): The level of unreverberated signal.
+Values: -90 - 0 dB.;
+#X text 621 54 preset: 0) bathroom 1) living room 2) church 3) cathedral
+4) canyon;
+#X text 38 24 gigaverb~ - A mono in \, stereo out reverb implementation
+by Juhana Sadeharju. Max/MSP-ified by Olaf Matthes. Version 1.0test3
+\, (c) 1999-2004 Juhana Sadeharju / Olaf Matthes. Port to Pd by Marco
+Matteo Markidis (mm.markidis@gmail.com);
+#X connect 0 0 2 0;
+#X connect 0 1 2 1;
+#X connect 1 0 0 0;
+#X connect 3 0 5 0;
+#X connect 4 0 3 0;
+#X connect 4 1 5 1;
+#X connect 5 0 6 0;
+#X connect 6 0 1 0;
+#X connect 8 0 11 0;
+#X connect 9 0 12 0;
+#X connect 10 0 0 0;
+#X connect 11 0 0 0;
+#X connect 12 0 0 0;
+#X connect 13 0 0 0;
+#X connect 14 0 13 0;
+#X connect 15 0 16 0;
+#X connect 16 0 0 0;
+#X connect 17 0 0 0;
+#X connect 18 0 21 0;
+#X connect 19 0 20 0;
+#X connect 20 0 0 0;
+#X connect 21 0 0 0;
+#X connect 22 0 23 0;
+#X connect 23 0 0 0;
+#X connect 24 0 25 0;
+#X connect 25 0 0 0;
+#X connect 26 0 27 0;
+#X connect 27 0 0 0;
+#X connect 29 0 28 0;
