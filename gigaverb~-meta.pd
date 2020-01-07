@@ -13,5 +13,5 @@
 #X text 16 263 WEBSITE;
 #X text 16 356 REPOSITORY https://github.com/electrickery/pd-gigaverb
 ;
-#X text 16 191 VERSION 1.0.0;
+#X text 16 191 VERSION 0.4;
 #X text 16 338 BUILD Fred Jan Kraan < fjkraan@xs4all.nl>;
