@@ -6,6 +6,8 @@ and released by Fred Jan Kraan <fjkraan@xs4all.nl> on
 https://puredata.info for usage with the Deken "Find externals" tool in
 January 2020.
 
+The original from Marco Matteo can be found <a href="https://github.com/d-i-s/gigaverb">here</a>
+
 Build & install with something like:
 <pre>
 make PDDIR=../pure-data/ install pkglibdir=~/Documents/Pd/externals/
